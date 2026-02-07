@@ -1,0 +1,23 @@
+{
+  "name": "worker",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "db":"*",
+    "@anthropic-ai/sdk": "^0.72.1",
+    "@google/genai": "^1.39.0",
+    "@google/generative-ai": "^0.24.1",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "fast-xml-parser": "^5.3.4"
+  }
+}
