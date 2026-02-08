@@ -131,7 +131,7 @@ app.post("/prompt", async (req, res) => {
     const result = await model.generateContentStream({
       contents: messages,
     });
-    let artifactProcessor=new ArtifactProcessor("",onFileUpdate,onShellCommand);
+    let artifactProcessor=new ArtifactProcessor("",(filePath,fileContent)=>onFileUpdate(filePath,fileContent,projectId),async (shellCommand)=>onShellCommand(shellCommand,projectId));
     let artifact = "";
 
     for await (const chunk of result.stream) {
