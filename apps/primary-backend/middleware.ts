@@ -88,14 +88,24 @@ export async function authMiddleware(
 
     const token = authHeader.replace("Bearer ", "");
 
+    if (!process.env.CLERK_SECRET_KEY) {
+      console.error("CLERK_SECRET_KEY is not defined");
+      return res.status(500).json({ error: "Server configuration error" });
+    }
+
     const payload = await verifyToken(token, {
-      secretKey: process.env.CLERK_SECRET_KEY!,
+      secretKey: process.env.CLERK_SECRET_KEY,
     });
+
+    if (!payload.sub) {
+      console.error("Token verified but no sub (userId) found");
+      return res.status(401).json({ error: "Invalid token payload" });
+    }
 
     req.userId = payload.sub;
     next();
   } catch (err) {
-    console.error(err);
+    console.error("Auth Error:", err);
     return res.status(401).json({ error: "Invalid or expired token" });
   }
 }

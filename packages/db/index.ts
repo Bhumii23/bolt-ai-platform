@@ -30,10 +30,14 @@
 // Posted by Damodharan, modified by community. See post 'Timeline' for change history
 // Retrieved 2026-02-07, License - CC BY-SA 4.0
 
-import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from './generated/prisma/client'
 
-const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
-export const prismaClient = new PrismaClient({ adapter })
+if (!process.env.DATABASE_URL) {
+    console.error("DATABASE_URL is not defined in packages/db/index.ts");
+}
+
+export const prismaClient = new PrismaClient({
+    datasourceUrl: process.env.DATABASE_URL,
+});
 
 
